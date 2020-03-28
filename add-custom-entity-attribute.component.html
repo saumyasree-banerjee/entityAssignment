@@ -1,0 +1,160 @@
+<div id="myModal" class="modal fade in" role="dialog" style="display: block;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="close" (click)="close()">&times;</button>
+			<div class="modal-header">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="modal-header-title">
+								{{ 'titles.customAttributes.addCustomEntityAttribute' | translate }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form [formGroup]="addCustomAttributeGroup">
+					<div class="row">
+						<div class="col-md-12">
+								<ng-container *ngIf="addCustomAttributeGroup.errors && addCustomAttributeGroup.invalid">
+									<ng-container *ngFor="let error of serverSideError">
+										<div class="error-server model-label" ng-hide="myVar">
+											<i class="fa fa-exclamation-circle" aria-hidden="true"></i> 
+											{{error.validationErrorCode | translate}}
+										</div>
+									</ng-container>
+								</ng-container>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="row">
+								<div class="col-md-12 form-group">
+									<label class="model-label">{{'labels.common.code' | translate }}<span>*</span></label> 
+									<input type="text" class="form-control" formControlName="addCustomAttributeCode" (paste)="refineModel($event)" (keyup)="refineModel($event)" (keydown)="refineModel($event)" #addCustomAttributeCodeNative maxlength="30" autofocus uppercase alphanum>
+									<div *ngIf="addCustomAttributeCode.invalid && (addCustomAttributeCode.dirty || addCustomAttributeCode.touched)">
+										<span *ngIf="addCustomAttributeCode.errors.required" class="error-text">
+											<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+											{{ 'errorMsgs.common.UIGENERIC004' | translate }}
+										</span>
+										<span *ngIf="addCustomAttributeCode.errors.invalidCode" class="error-text">
+											<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+											{{ 'errorMsgs.customAttributes.CA006' | translate }}
+										</span>
+									</div>																		
+								</div>
+								<div class="col-md-12 form-group">
+									<label class="checkbox-container">
+										<input type="checkbox" formControlName="addCustomAttributeIdentifier">
+										<label class="model-label">{{'labels.customAttributes.isIdentifier' | translate }}</label>
+										<span class="checkmark"></span>
+									</label>
+								</div>
+								<!-- 	<div class="col-md-12 form-group">
+									<label class="checkbox-container">
+										<input type="checkbox" formControlName="addCustomAttributeMandatory"> 
+										<label class="model-label">{{'customentityattributesModule.Is-Mandatory' | translate }}</label>
+										<span class="checkmark"></span>
+									</label>
+								</div> -->
+							</div>
+						</div>
+						<div class="col-md-6 form-group">
+							<label class="model-label">
+								{{ 'labels.common.description' | translate }}<span>*</span>
+							</label>
+							<textarea class="form-control" formControlName="addCustomAttributeDesc" maxlength="500"></textarea>
+							<div *ngIf="addCustomAttributeDesc.invalid && (addCustomAttributeDesc.dirty || addCustomAttributeDesc.touched)">
+								<span *ngIf="addCustomAttributeDesc.errors.required" class="error-text">
+									<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+									{{ 'errorMsgs.common.UIGENERIC004' | translate }}
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 form-group">
+							<label class="model-label">{{ 'labels.customAttributes.dataType' | translate }}<span>*</span></label>
+							<select class="form-control" formControlName="addCustomAttributeDataType">
+								<option value="">Select</option>
+								<option value="STRING">String</option>
+								<option value="LISTBOX">List Box</option>
+								<option value="NUMERIC">Numeric</option>
+								<option value="DATE">Date</option>
+							</select>
+							<i class="fa fa-caret-down"></i>
+							<ng-container *ngIf="addCustomAttributeDataType.touched && addCustomAttributeDataType.invalid">
+								<span *ngIf="addCustomAttributeDataType.errors.required" class="error-text">
+									<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+									{{ 'errorMsgs.common.UIGENERIC004' | translate }}
+								</span>
+							</ng-container>
+						</div>
+					</div>
+					<div class="datatype-bg" *ngIf="showList">
+						<!-- <div class="row">
+							<div class="col-md-6 form-group">
+								<label class="model-label">{{ 'customentityattributesModule.Datatype' | translate }}</label>
+							</div>
+						</div> -->
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label class="model-label">{{ 'labels.customAttributes.entries' | translate }}<span>*</span></label>
+								<textarea rows="5" cols="20" class="form-control" formControlName="addCustomAttributeList"></textarea>
+								<div *ngIf="addCustomAttributeList.invalid && (addCustomAttributeList.dirty || addCustomAttributeList.touched)">
+									<span *ngIf="addCustomAttributeList.errors.required" class="error-text">
+										<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+										{{ 'errorMsgs.common.UIGENERIC004' | translate }}
+									</span>
+									<span *ngIf="addCustomAttributeList.errors.invalidCode" class="error-text">
+										<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+										{{ 'errorMsgs.customAttributes.CA008' | translate }}
+									</span>
+								</div><br>
+							
+								<!--
+									<label class="checkbox-container">
+										<input type="checkbox" formControlName="addCustomAttributeIdentifier">
+										<label class="model-label">{{'labels.customAttributes.isIdentifier' | translate }}</label>
+										<span class="checkmark"></span>
+									</label>
+								</div> -->					
+								<div class="row">				
+								<div class="col-md-12">
+								<label class="checkbox-container">
+									<input type="checkbox" formControlName="addCustomAttributeMultiSelect" />
+									<label class="model-label">{{ 'labels.customAttributes.isMultiSelect' | translate }}</label>
+									<span class="checkmark"></span>
+								</label>
+								</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group">
+								<!-- <div *ngIf="!isMultiSelect"> -->
+								<div>
+									<label class="model-label">{{ 'labels.customAttributes.preview' | translate }}</label>
+									<select class="form-control">
+										<option value="">Select</option>
+										<option *ngFor="let item of dropdownList" [value]="item.itemName" >{{item.itemName}}</option>
+									</select>
+									<i class="fa fa-caret-down"></i>
+
+								</div>
+								<!-- <div *ngIf="isMultiSelect">
+									<label class="model-label">{{ 'labels.customAttributes.preview' | translate }}</label>
+									<angular2-multiselect [(ngModel)]="selectedItems" [ngModelOptions]="{standalone: true}"  [data]="dropdownList" [settings]="dropdownSettings">
+									</angular2-multiselect>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" *ngIf="!addCustomAttributeGroup.dirty" [disabled]="!addCustomAttributeGroup.dirty" (click)="addCustomAttribute()">{{ 'buttons.save' | translate }}</button> 
+				<button type="button" class="btn btn-primary" *ngIf="addCustomAttributeGroup.dirty" [disabled]="!addCustomAttributeGroup.valid" (click)="addCustomAttribute()">{{ 'buttons.save' | translate }}</button>
+				<button type="button" class="btn btn-secondary" (click)="close()">{{ 'buttons.cancel' | translate }}</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop fade in"></div>

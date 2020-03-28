@@ -1,0 +1,128 @@
+<div id="myModal" class="modal fade in" role="dialog" style="display: block;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="close()" >&times;</button>
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-md-12">
+              <div class="modal-header-title">
+                  {{ 'titles.entityAssignments.viewAssignedEntities' | translate }}
+              </div>      
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-5">
+                  <div [hidden]="!zeroResults" class="error-server model-label" ng-hide="myVar">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 
+                    {{ 'errorMsgs.common.GENERIC008' | translate }}
+                    
+                  </div>
+            </div>
+          </div>
+        <form #entityAssignmentForm="ngForm" novalidate>
+          <div class="panel-group" id="accordion" style="margin-bottom:12px;">
+            <div class="panel panel-default">
+              <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
+                <div class="panel-title">
+                    {{ 'titles.fileVault.search' | translate }}
+                </div>
+              </div>
+              <div id="collapseOne" class="collapse">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-3 form-group">
+                      <label class="model-label">{{ 'labels.common.validFrom' | translate }}<span>*</span></label>
+                      <div class="input-group">
+                        <input class="form-control"  placeholder="DD/MM/YYYY" ngx-mydatepicker name="validOn" required maxlength="10" tabindex="2001"
+                                [(ngModel)]="validOnModel" [options]="validOnDateOptions" #dp="ngx-mydatepicker" (dateChanged)="onValidOnDateChanged($event)"
+                                #validOn="ngModel"  (focus)="checkValidOnDate($event)" (keyup)="checkValidOnDate($event)"/>
+                        <span class="input-group-addon">
+                          <span (click)="dp.toggleCalendar()"><i class="fa fa-calendar-o dateicon"></i></span>
+                        </span>
+                      </div>
+                      <div *ngIf="validOn.invalid && (validOn.dirty || validOn.touched)">
+                        <span class="error-text"*ngIf="validOn.errors.required">
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                          {{ 'errorMsgs.common.UIGENERIC004' | translate }}
+                        </span>
+                        <span *ngIf="validOn.errors.invalidFormat" class="error-text">
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                          {{ 'errorMsgs.common.UIGENERIC006' | translate }}
+                        </span>
+                        <span *ngIf="!validOn.errors.invalidFormat && validOn.errors.invalidDateFormat" class="error-text">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            {{ 'errorMsgs.common.UIGENERIC005' | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 form-group">
+                      <label class="model-label">{{ 'labels.common.validTo' | translate }}<span>*</span></label>
+                      <div class="input-group">
+                        <input class="form-control"  placeholder="DD/MM/YYYY" ngx-mydatepicker name="validTo" required maxlength="10" tabindex="2001"
+                                [(ngModel)]="validToModel" [options]="validToDateOptions" #dp1="ngx-mydatepicker" (dateChanged)="onValidToDateChanged($event)"
+                                #validTo="ngModel" (focus)="checkValidToDate($event)" (keyup)="checkValidToDate($event)"/>
+                        <span class="input-group-addon">
+                          <span (click)="dp1.toggleCalendar()"><i class="fa fa-calendar-o dateicon"></i></span>
+                        </span>
+                      </div>
+                      <div *ngIf="validTo.invalid && (validTo.dirty || validTo.touched)">
+                        <span class="error-text"*ngIf="validTo.errors.required">
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                          {{ 'errorMsgs.common.UIGENERIC004' | translate }}
+                        </span>
+                        <span *ngIf="validTo.errors.compareInvalid" class="error-text">
+                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            {{ 'errorMsgs.common.UIGENERIC005' | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <div>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"  [disabled]="validOn.invalid || validTo.invalid" (click)=searchViewAssignedEntityResults()>{{ 'buttons.search' | translate }}</button>  
+                        <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal" (click)="resetFrom()">{{ 'buttons.clearAll' | translate }}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="row">
+            <div class="col-md-12">
+              <div class="model-section">{{ 'titles.entityAssignments.assignedEntities' | translate }}</div>
+            </div>
+          </div>
+          <div [hidden]="!showResults">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-result-text desc">
+                  <div class="pull-right">
+                    <button type="button" class="btn btn-primary small" data-dismiss="modal" (click)="onBtExport()">{{ 'buttons.export' | translate }}</button>
+                  </div>
+                  {{ 'genericMsgs.recordsFound' | translate }} &nbsp;{{entriesvalue}}
+                </div>    
+              </div>
+            </div>
+            <div class="table-responsive">
+            <div class="table table-striped">
+              <div>
+                  <ag-grid-angular #entityAssignmentGrid style="width: auto; height: 40vh;" class="ag-fresh" 
+                  [columnDefs]="columnDefs"
+                  [gridOptions]="gridOptions">
+                  </ag-grid-angular>
+              </div>
+          </div>
+        </div>
+      </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()" >{{ 'buttons.close' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade in"></div>

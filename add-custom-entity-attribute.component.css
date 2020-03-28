@@ -1,0 +1,20 @@
+.pull-right{
+  float: right;
+}
+
+.datatype-bg{
+  background-color: #F5F7FA;
+  padding:15px;
+}
+/* .modal-dialog{
+  max-height: 95vh; 
+}
+.modal-body{
+  height: auto!important;
+  max-height: 95vh; padding-bottom: 5px!important
+}
+.model-footer{
+  position: absolute!important;
+  bottom:0!important;
+}
+   */

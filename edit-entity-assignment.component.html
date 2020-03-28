@@ -1,0 +1,125 @@
+<div id="myModal" class="modal fade in" role="dialog" style="display: block;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <button type="button" class="close" (click)="close()" >&times;</button>
+        <div class="modal-header">
+          <div class="row">
+            <div class="col-md-12">
+                <div class="modal-header-title">
+                  {{ 'titles.entityAssignments.editAssignedEntities' | translate }}</div>      
+            </div>
+          </div>
+          <br />
+          <div class="row">
+              <div class="col-md-2" style="width:140px;">
+                <label class="model-label">{{ 'labels.obligationPerGroup.entityGroup' | translate }}</label>
+              </div>
+              <div class="col-md-4 copytext">{{entityRow.name}}</div>
+          </div>
+        </div>
+        <div class="modal-body" id="model-body">
+          <form [formGroup]='editEntityAssignment'>
+              <div class="row">
+                  <div class="col-md-12">
+                      <ng-container *ngIf="editEntityAssignment.errors && editEntityAssignment.invalid">
+                          <ng-container *ngFor="let error of serverSideError">
+                            <div class="error-server model-label" ng-hide="myVar">
+                              <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 
+                              {{error.validationErrorCode | translate:error.messageParams}}
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                  </div>
+              </div>
+            <br>
+            <div class="panel-group" id="accordion" style="margin-bottom:12px;">
+              <div class="panel panel-default">
+                <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
+                  <div class="panel-title">
+                      {{ 'titles.fileVault.search' | translate }}
+                  </div>
+                </div>
+                <div id="collapseOne" class="collapse">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-3 form-group">
+                        <label class="model-label">{{ 'labels.entityAssignments.assignmentOn' | translate }}<span>*</span></label>
+                          <div class="input-group">
+                            <input class="form-control"  placeholder="DD/MM/YYYY" ngx-mydatepicker maxlength="10" (keyup)="checkMandatoryField($event)" formControlName="editEntityAssignmentDateFrom" [options]="validOnDateOptions" #dp1="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
+                            <span class="input-group-addon">
+                              <span (click)="dp1.toggleCalendar()"><i class="fa fa-calendar-o dateicon"></i></span>
+                            </span>
+                          </div>
+                         <div *ngIf="editEntityAssignmentDateFrom.invalid && (editEntityAssignmentDateFrom.dirty || editEntityAssignmentDateFrom.touched)">
+                            <span *ngIf="editEntityAssignmentDateFrom.errors.required" class="error-text">
+                              <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                              {{ 'errorMsgs.common.UIGENERIC004' | translate }}
+                            </span>
+                            <span *ngIf="editEntityAssignmentDateFrom.errors.invalidFormat" class="error-text"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                              {{ 'errorMsgs.common.UIGENERIC006' | translate }}
+                            </span>
+                          </div>
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label class="model-label">{{ 'labels.entityAssignments.assignmentStatus' | translate }}<span>*</span></label>
+                        <select class="form-control" tabindex="2006" formControlName="assignmentStatus">
+                          <option value="ALL">All</option>
+                          <option value="UNASSIGNED">Not Assigned</option>
+                          <option VALUE="ASSIGNED">Assigned</option>
+                        </select>
+                        <i class="fa fa-caret-down"></i>
+                      <!-- <div class="col-md-3 form-group">
+                        <label class="model-label">{{ 'labels.entityAssignments.assignmentStatus' | translate }}<span>*</span></label>
+                        <select class="form-control" tabindex="2002" [(ngModel)]="assignmentStatusModel" name='assignmentStatus' #assignmentStatus='ngModel'>
+                          <option value="ALL">All</option>
+                          <option value="UNASSIGNED">Not Assigned</option>
+                          <option VALUE="ASSIGNED">Assigned</option>
+                        </select>
+                        <i class="fa fa-caret-down"></i>
+                      </div> -->
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <div>
+                          <button class="btn btn-primary" data-dismiss="modal" tabindex="2003" type="button" (click)="populateAssignments()">{{ 'buttons.search' | translate }}</button>  
+                          <button class="btn btn-secondary pull-right"  tabindex="2004" data-dismiss="modal" type="button" (click)="resetFrom()">{{ 'buttons.clearAll' | translate }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="model-section">{{ 'titles.entityAssignments.entities' | translate }}</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="search-result-text desc">
+                      <div class="pull-right">
+                              <button type="button" class="btn btn-primary small" data-dismiss="modal" (click)=onBtnExport()>{{ 'buttons.export' | translate }}</button>
+                      </div>
+                      {{ 'genericMsgs.recordsFound' | translate }} &nbsp;{{entriesvalue}}
+                  </div>    
+              </div>
+            </div>
+            <div class="table-responsive table-striped">
+              <ag-grid-angular #editEntityGrid class="ag-fresh" style="width:auto; height:600px;" 
+                [columnDefs]="columnDefs"
+                [gridOptions]="gridOptions">
+              </ag-grid-angular>
+            </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" *ngIf="!editEntityAssignment.dirty" [disabled]="!editEntityAssignment.dirty" (click)="saveEditAssignments()">{{ 'buttons.save' | translate }}</button> 
+            <button type="button" class="btn btn-primary" *ngIf="editEntityAssignment.dirty" [disabled]="!editEntityAssignment.valid" (click)="saveEditAssignments()">{{ 'buttons.save' | translate }}</button>
+            <!-- <button type="button" class="btn btn-primary" (click)="saveEditAssignments()">{{ 'buttons.save' | translate }}</button>
+            <button type="button" class="btn btn-primary" [disabled]="editEntityAssignment.invalid" (click)="saveEditAssignments()">{{ 'buttons.save' | translate }}</button> -->
+            <button type="button" class="btn btn-secondary" (click)="close()" >{{ 'buttons.cancel' | translate }}</button>
+        </div>
+      </div>
+  </div>
+  </div>
+  <div class="modal-backdrop fade in"></div>

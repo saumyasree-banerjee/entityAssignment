@@ -1,0 +1,22 @@
+.table-striped > thead > tr > th{
+  border-bottom: 1px solid #003299;
+}
+                  /* Filter Panel Classes */
+.panel-group button{ 
+  margin-top:25px !important;
+}
+.modal-lg {
+  width: 95%;
+}
+input[type="text"]::-ms-clear {
+  display: none;
+}
+#collapseOne{
+  background-color:#EFF3F6;
+ }
+.modal-header{
+  padding: 47px 31px 0px 48px;
+ }
+.error-server {
+  margin-top: -2px;
+}

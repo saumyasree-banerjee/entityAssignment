@@ -1,0 +1,61 @@
+<div id="myModal" class="modal fade in" role="dialog" style="display: block;">
+  <div class="modal-dialog">  
+    <div class="modal-content">   
+        <button type="button" class="close" (click)="close()">&times;</button>
+      <div class="modal-header">
+        <div class="row">
+          <div class="col-md-12">                
+            <div class="modal-header-title">{{ 'titles.entityGroups.addEntityGroup' | translate }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+          <form class="form-group no-margin" [formGroup]="addEntityGroup">
+              <div class="row">
+                  <div class="col-md-12">
+                    <ng-container *ngIf="addEntityGroup.errors && addEntityGroup.invalid">
+                      <ng-container *ngFor="let error of serverSideError">
+                        <div class="error-server model-label" ng-hide="myVar">
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 
+                          {{error.validationErrorCode | translate}}
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="form-group col-md-6"><label class="model-label">{{ 'labels.common.name' | translate }}<span>*</span></label>
+                    <input class="form-control inputwidth" formControlName="entityGroupName" type="text" maxlength="20" (paste)="refineModel($event)" (keyup)="refineModel($event)" (keydown)="refineModel($event)" #addentityGroupNameNative autofocus alphanumspace>
+                    <div *ngIf="entityGroupName.invalid && (entityGroupName.dirty || entityGroupName.touched)">
+                        <span *ngIf="entityGroupName.errors.required" class="error-text">
+                          <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                          {{'errorMsgs.common.UIGENERIC004' | translate}}
+                        </span>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label class="model-label">{{ 'labels.common.description' | translate }}<span>*</span></label>
+                  <textarea type='text' class="form-control" formControlName="entityGroupDescription" maxlength="500"></textarea>
+                  <div *ngIf="entityGroupDescription.invalid && (entityGroupDescription.dirty || entityGroupDescription.touched)">
+                    <span *ngIf="entityGroupDescription.errors.required" class="error-text">
+                      <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                      {{'errorMsgs.common.UIGENERIC004' | translate}}
+                    </span>
+                  </div>
+                </div>
+            </div>
+          </form>
+      </div>
+
+      <div class="modal-footer modal-btn-bg">
+        <div class="pull right">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" [disabled]="!addEntityGroup.valid" (click)="addEntityGroups()">&nbsp;&nbsp;{{ 'buttons.save' | translate }}&nbsp;&nbsp;</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">{{ 'buttons.cancel' | translate }}</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="modal-backdrop fade in"></div>

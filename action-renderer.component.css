@@ -1,0 +1,16 @@
+a.disabled, a.disabled:visited {
+    pointer-events: none;
+    cursor: default;
+    color: gray;
+    opacity: 0.5;
+ }
+ .dropdown > a:hover {
+    background-color: #318ACE;
+    color: white !important;
+    padding:3px 3px !important;
+    width: 24px !important;
+}
+.dropdown >a{
+    padding:3px 3px !important;
+    border-radius: 2px;
+}

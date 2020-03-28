@@ -1,0 +1,318 @@
+<ng-container *ngIf="agGridId==='DATACOLLECTIONS'">
+    <ng-template *ngxPermissionsOnly="['DTDF.MTDA.EDIT','DTDF.MTDA.VIEW']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeViewMethod() *ngIf='dataCollectionListPermissions["DTDF.MTDA.VIEW"]' >{{ 'actions.common.view' | translate }}</a></li>
+                <li><a data-toggle="modal" (click)=invokeEditMethod() *ngIf="dataCollectionListPermissions['DTDF.MTDA.EDIT']">{{ 'actions.common.edit' | translate }}</a></li>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+
+
+<ng-container *ngIf="agGridId==='REPORTINGOBLIGATIONSPERGROUP'">
+        <ng-template *ngxPermissionsOnly="['DTDF.OBGR.VIEW','DTDF.OBGR.EDIT','DTDF.OBGR.DEL']; else elseBlock; then thenBlock"></ng-template>
+        <ng-template #elseBlock>
+            <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+        </ng-template>
+        <ng-template #thenBlock>
+            <div class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                        <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+                </a>
+                <ul class="dropdown-menu" id="ellipsesdrop">
+                    <li><a data-toggle="modal" (click)=invokeViewMethod() *ngxPermissionsOnly="['DTDF.OBGR.VIEW']" >{{ 'actions.reporitingObligation.view' | translate }}</a></li>
+                    <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.OBGR.EDIT']">{{ 'actions.common.edit' | translate }}</a></li>       
+                    <ng-template *ngIf="deleteSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                    <ng-template #disabledelete>
+                        <li><a class="disabled" data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.OBGR.DEL']"  title="Not available for the delete">{{ 'actions.common.delete' | translate }}</a></li>
+                    </ng-template>
+                    <ng-template  #deleteRow>
+                        <li><a data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.OBGR.DEL']" >{{ 'actions.common.delete' | translate }}</a></li>
+                    </ng-template>
+                </ul>
+            </div>
+        </ng-template>
+    </ng-container>
+<ng-container *ngIf="agGridId==='DATADICTIONARIES'">
+        <ng-template *ngxPermissionsOnly="['DICT.DEL','DICT.MTDA.EDIT','DICT.MTDA.VIEW']; else elseBlock; then thenBlock"></ng-template>
+        <ng-template #elseBlock>
+            <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+        </ng-template>
+        <ng-template #thenBlock>
+            <div class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                        <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+                </a>
+                <ul class="dropdown-menu" id="ellipsesdrop">
+                    <li><a data-toggle="modal" (click)=invokeViewMethod() *ngxPermissionsOnly="['DICT.MTDA.VIEW']" >{{ 'actions.common.view' | translate }}</a></li>
+                    <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DICT.MTDA.EDIT']">{{ 'actions.common.edit' | translate }}</a></li>       
+                     <ng-template *ngIf="deleteSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                    <ng-template #disabledelete>
+                        <li><a class="disabled" data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DICT.DEL']" >{{ 'actions.common.delete' | translate }}</a></li>
+                    </ng-template>
+                    <ng-template  #deleteRow>
+                        <li><a data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DICT.DEL']" >{{ 'actions.common.delete' | translate }}</a></li>
+                    </ng-template>
+                </ul>
+            </div>
+        </ng-template>
+    </ng-container>
+    <ng-container *ngIf="agGridId==='CUSTOMENTITY'">
+            <ng-template *ngxPermissionsOnly="['DTDF.CUAT.EDIT','DTDF.CUAT.VIEW','DTDF.CUAT.DEL']; else elseBlock; then thenBlock"></ng-template>
+            <ng-template #elseBlock>
+                <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+            </ng-template>
+            <ng-template #thenBlock>
+                <div class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                        <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu" id="ellipsesdrop">
+                        <li><a data-toggle="modal" (click)=invokeViewMethod() *ngxPermissionsOnly="['DTDF.CUAT.VIEW']" >{{ 'actions.common.view' | translate }}</a></li>
+                        <!-- <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.CUAT.EDIT']">Edit</a></li>  -->      
+                        <ng-template *ngIf="editSelectedRow; then disableedit;else editRow"></ng-template>
+                        <ng-template #disableedit>
+                            <li><a class="disabled" data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.CUAT.EDIT']" >{{ 'actions.common.edit' | translate }}</a></li>
+                        </ng-template>
+                        <ng-template  #editRow>
+                            <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.CUAT.EDIT']" >{{ 'actions.common.edit' | translate }}</a></li>
+                        </ng-template>
+                        
+                        <ng-template *ngIf="deleteSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                        <ng-template #disabledelete>
+                            <li><a class="disabled" data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.CUAT.DEL']"  title="Not available for the delete">{{ 'actions.common.delete' | translate }}</a></li>
+                        </ng-template>
+                        <ng-template  #deleteRow>
+                            <li><a data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.CUAT.DEL']" >{{ 'actions.common.delete' | translate }}</a></li>
+                        </ng-template>
+                    </ul>
+                </div>
+            </ng-template>
+        </ng-container>
+<ng-container *ngIf="agGridId==='ENTITYGROUP'">
+    <ng-template *ngxPermissionsOnly="['DTDF.ENGR.EDIT','DTDF.ENGR.EDAS','DTDF.ENGR.VWAS','DTDF.ENGR.DEL']; else elseENTITYGROUP; then thenENTITYGROUP"></ng-template>
+    <ng-template #elseENTITYGROUP>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenENTITYGROUP>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeViewAssignments() *ngxPermissionsOnly="['DTDF.ENGR.VWAS']">{{ 'actions.entityGroup.viewAssignments' | translate }}</a></li>
+                <li><a data-toggle="modal" (click)=invokeEditAssignments() *ngxPermissionsOnly="['DTDF.ENGR.EDAS']">{{ 'actions.entityGroup.editAssignments' | translate }}</a></li>
+                <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.ENGR.EDIT']">{{ 'actions.entityGroup.editEntityGroup' | translate }}</a></li>
+                <!-- <li><a data-toggle="modal" (click)=invokeViewMethod() *ngxPermissionsOnly="['DTDF.ENGR.VIEW']" >View</a></li> -->
+                <ng-template *ngIf="deleteSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                    <ng-template #disabledelete>
+                        <li><a class="disabled" data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.ENGR.DEL']" >{{ 'actions.entityGroup.deleteEntityGroup' | translate }}</a></li>
+                    </ng-template>
+                    <ng-template  #deleteRow>
+                    <li><a data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.ENGR.DEL']" >{{ 'actions.entityGroup.deleteEntityGroup' | translate }}</a></li>
+                    </ng-template>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+<ng-container *ngIf="agGridId==='REPORTINGCYCLES'">
+    <ng-template *ngxPermissionsOnly="['DTDF.RPCY.EDIT']; else elseREPORTINGCYCLES; then thenREPORTINGCYCLES"></ng-template>
+    <ng-template #elseREPORTINGCYCLES>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenREPORTINGCYCLES>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.RPCY.EDIT']">{{ 'actions.common.edit' | translate }}</a></li>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+<ng-container *ngIf="agGridId==='VIEWMODULES'">
+        <ng-template *ngxPermissionsOnly="['DTDF.MODU.EDIT', 'DTDF.MODU.VERS', 'DTDF.MODU.UPLD']; else elseBlock; then thenBlock"></ng-template>
+        <ng-template #elseBlock>
+            <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+        </ng-template>
+        <ng-template #thenBlock>
+            <div class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                    <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+                </a>
+                <ul class="dropdown-menu" id="ellipsesdrop">
+                   
+                    <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.MODU.EDIT']">{{ 'actions.common.edit' | translate }}</a></li> 
+                    <li><a data-toggle="modal" [class.disabled]="!enableAddNewVersion"  (click)=invokeAddNewVersion() *ngxPermissionsOnly="['DTDF.MODU.VERS']">{{ 'actions.modules.addNewVersion' | translate }}</a></li>
+                    <ng-template *ngIf="deleteSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                    <!-- <ng-template #disabledelete>
+                        <li><a class="disabled" data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="[]" >Delete</a></li>
+                    </ng-template>
+                    <ng-template  #deleteRow>
+                        <li><a data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="[]" >Delete</a></li>
+                    </ng-template> -->
+                    <ng-template *ngIf="uploadSelectedRow; then disableupload;else uploadRow"></ng-template>
+                    <ng-template #disableupload>
+                        <li><a class="disabled" data-toggle="modal" (click)=invokeUploadExcel() *ngxPermissionsOnly="['DTDF.MODU.UPLD']"  title="Not available for the upload">{{ 'actions.modules.uploadTemplate' | translate }}</a></li>
+                    </ng-template>
+                    <ng-template  #uploadRow>
+                        <li><a data-toggle="modal" (click)=invokeUploadExcel() *ngxPermissionsOnly="['DTDF.MODU.UPLD']" >{{ 'actions.modules.uploadTemplate' | translate }}</a></li>
+                    </ng-template>
+                </ul>
+            </div>
+        </ng-template>
+    </ng-container>
+<ng-container *ngIf="agGridId==='REPORTINGENTITIES'">
+    <ng-template *ngxPermissionsOnly="['DTDF.ENTY.DEL', 'DTDF.ENTY.EDIT', 'DTDF.ENTY.EAVIEW']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeViewMethod() *ngxPermissionsOnly="['DTDF.ENTY.EAVIEW']" >{{ 'actions.reporitingEntity.view' | translate }}</a></li>
+                <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly="['DTDF.ENTY.EDIT']">{{ 'actions.common.edit' | translate }}</a></li>               
+                <ng-template *ngIf="deleteSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                <ng-template #disabledelete>
+                    <li><a class="disabled" data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.ENTY.DEL']"  title="Not available for the delete">{{ 'actions.common.delete' | translate }}</a></li>
+                </ng-template>
+                <ng-template  #deleteRow>
+                    <li><a data-toggle="modal" (click)=invokeDeleteMethod() *ngxPermissionsOnly="['DTDF.ENTY.DEL']" >{{ 'actions.common.delete' | translate }}</a></li>
+                </ng-template>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+<ng-container *ngIf="agGridId==='FILEVAULT'">
+    <ng-template *ngxPermissionsOnly="['SBMN.FV.DWLD', 'SBMN.FV.VAL']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeDownloadMethod() *ngxPermissionsOnly="['SBMN.FV.DWLD']" >{{ 'actions.common.download' | translate }}</a></li>
+                <li><a data-toggle="modal" (click)=invokeValidationResluts() *ngxPermissionsOnly="['SBMN.FV.VAL']" >{{ 'actions.fileVault.viewValidationResults' | translate }}</a></li>
+                
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+<ng-container *ngIf="agGridId==='SUBMISSIONS'">
+    <ng-template *ngxPermissionsOnly="['SBMN.SBLT', 'SBMN.FV']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeviewSubmissionList() *ngIf="dataCollectionListPermissions['SBMN.SBLT']" >{{ 'actions.submission.viewSubmissionList' | translate }}</a></li>
+                <li><a data-toggle="modal" (click)=invokevviewFileVault() *ngIf="dataCollectionListPermissions['SBMN.FV']" >{{ 'actions.submission.viewFileVault' | translate }}</a></li>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+<ng-container *ngIf="agGridId==='SUBMISSIONSLIST'">
+    <ng-template *ngxPermissionsOnly="['SBMN.SBLT.DWLD']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <ng-template *ngIf="downloadSelectedRow; then disabledelete;else deleteRow"></ng-template>
+                <ng-template #disabledelete>
+                    <li><a class="disabled" data-toggle="modal" (click)=invokeDownloadMethod() *ngxPermissionsOnly="['SBMN.SBLT.DWLD']"  title="Not available for the download">{{ 'actions.common.download' | translate }}</a></li>
+                </ng-template>
+                <ng-template  #deleteRow>
+                    <li><a data-toggle="modal" (click)=invokeDownloadMethod() *ngxPermissionsOnly="['SBMN.SBLT.DWLD']" >{{ 'actions.common.download' | translate }}</a></li>
+                </ng-template>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+
+<ng-container *ngIf="agGridId==='USERASSIGNMENTS'">
+    <ng-template *ngxPermissionsOnly="['AUTH.USER.UNASGN', 'AUTH.USER.ASGN']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <ng-template *ngIf="isAssign; then disableAssign;else enableAssign"></ng-template>
+                <ng-template #disableAssign>
+                    <li><a class="disabled" data-toggle="modal" (click)=invokeAssignMethod() *ngxPermissionsOnly="['AUTH.USER.ASGN']"  title="Not available for assignment">{{ 'actions.userassignments.assign' | translate }}</a></li>
+                </ng-template>
+                <ng-template  #enableAssign>
+                    <li><a data-toggle="modal" (click)=invokeAssignMethod() *ngxPermissionsOnly="['AUTH.USER.ASGN']" >{{ 'actions.userassignments.assign' | translate }}</a></li>
+                </ng-template>
+                <ng-template *ngIf="isUnassign; then disableUnassign;else enableUnassign"></ng-template>
+                <ng-template #disableUnassign>
+                    <li><a class="disabled" data-toggle="modal" (click)=invokeUnassignMethod() *ngxPermissionsOnly="['AUTH.USER.UNASGN']"  title="Not available for unassignment">{{ 'actions.userassignments.unassign' | translate }}</a></li>
+                </ng-template>
+                <ng-template  #enableUnassign>
+                    <li><a data-toggle="modal" (click)=invokeUnassignMethod() *ngxPermissionsOnly="['AUTH.USER.UNASGN']" >{{ 'actions.userassignments.unassign' | translate }}</a></li>
+                </ng-template>         
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+<ng-container *ngIf="agGridId==='EDITENTITYASSIGHNMENT'">
+    <ng-template *ngIf="entityAssignmentStatus; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="padding-left:16%; color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">      
+                <li><a data-toggle="modal" (click)=invokeAddDupMethod() >{{ 'buttons.addDuplicate' | translate }}</a></li>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>
+
+<!-- Data points -->
+<ng-container *ngIf="agGridId==='DATAPOINTS'">
+    <ng-template *ngxPermissionsOnly="['DTDF.DAPT.EDIT']; else elseBlock; then thenBlock"></ng-template>
+    <ng-template #elseBlock>
+        <i class="fa fa-ellipsis-v modal-title" style="color:gray" aria-hidden="true"></i>
+    </ng-template>
+    <ng-template #thenBlock>
+        <div class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" style="color:#003299">
+                <i style="padding-left:10px; padding-right:10px; padding-top:5px; padding-bottom:5px" class="fa fa-ellipsis-v modal-title" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu" id="ellipsesdrop">
+                <li><a data-toggle="modal" (click)=invokeEditMethod() *ngxPermissionsOnly= "['DTDF.DAPT.EDIT']" >{{ 'actions.common.edit' | translate }}</a></li>
+            </ul>
+        </div>
+    </ng-template>
+</ng-container>

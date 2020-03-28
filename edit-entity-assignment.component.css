@@ -1,0 +1,29 @@
+.table-striped > thead > tr > th{
+  border-bottom: 1px solid #003299;
+}
+.rowheader{
+  border-bottom: 1px solid #DFE3E6 !important;
+}
+.panel-group button{ 
+  margin-top:25px !important;
+}
+.modal-dialog{
+  width:80%;
+}
+.modal-dialog{
+  max-height: 75vh; 
+}
+.modal-body{
+  height: auto!important;
+  max-height: 75vh; padding-bottom: 5px!important
+}
+.model-footer{
+  position: absolute!important;
+  bottom:0!important;
+}
+.modal-lg {
+  width: 95%;
+}
+.modal-header{
+  padding: 47px 31px 0px 48px !important;
+ }
